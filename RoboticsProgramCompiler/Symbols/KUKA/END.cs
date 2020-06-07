@@ -6,15 +6,16 @@ using System.Text.RegularExpressions;
 namespace RoboticsProgramCompiler.Symbols.KUKA
 {
     /// <summary>
-    /// 设置参数
+    /// 标签
     /// </summary>
-    public class SetFDAT : Instruction, IParser
+    public class END : Instruction, IParser
     {
-        private const string regex = @"^FDAT_ACT = ([\S]*)";
+        private const string regex = @"^END$";
 
         public override object Execute(Executor executor)
         {
             Tracker.LogD($"execute > {GetType().Name}: {Text} ({referenceSymbols})");
+            executor.Return();
             return null;
         }
 
@@ -26,19 +27,14 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 return null;
             }
 
-            return new Symbol[] { new SetFDAT() {
+            return new Symbol[] { new END() {
                 Namespace = arguments["namespace"] as string,
-                Name = UUID.Generate(arguments["namespace"] as string),
+                Name = UUID.Generate(arguments["namespace"] as string, mc.Groups[1].Value),
+                Type = SymbolType.Return,
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
-                Text = text,
-                referenceSymbols = new List<Symbol>() {
-                    new Reference() {
-                        Namespace = arguments["namespace"] as string,
-                        Name = mc.Groups[1].Value
-                    }
-                }
+                Text = text
             } };
         }
     }

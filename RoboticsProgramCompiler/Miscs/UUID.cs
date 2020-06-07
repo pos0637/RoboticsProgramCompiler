@@ -12,7 +12,7 @@
         /// <returns>UUID</returns>
         public static string Generate(string file)
         {
-            return file + System.Guid.NewGuid().ToString("N");
+            return $"{file}/{System.Guid.NewGuid():N}";
         }
 
         /// <summary>

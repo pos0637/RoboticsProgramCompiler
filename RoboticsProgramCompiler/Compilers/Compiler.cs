@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RoboticsProgramCompiler.Symbols;
+using System.Collections.Generic;
 
 namespace RoboticsProgramCompiler.Compilers
 {
@@ -17,9 +18,10 @@ namespace RoboticsProgramCompiler.Compilers
         /// <summary>
         /// 编译文件
         /// </summary>
+        /// <param name="rootFolder">根目录</param>
         /// <param name="filename"></param>
         /// <returns>程序集</returns>
-        public abstract Assembly Compile(string filename);
+        public abstract Assembly Compile(string rootFolder, string filename);
 
         /// <summary>
         /// 链接
@@ -35,6 +37,14 @@ namespace RoboticsProgramCompiler.Compilers
         /// <param name="assemblies">程序集列表</param>
         /// <returns>程序集</returns>
         public abstract Assembly Link(Assembly source, List<Assembly> assemblies);
+
+        /// <summary>
+        /// 查找符号
+        /// </summary>
+        /// <param name="assembly">程序集</param>
+        /// <param name="reference">引用</param>
+        /// <returns>符号</returns>
+        public abstract Symbol FindSymbol(Assembly assembly, Reference reference);
 
         /// <summary>
         /// 清理

@@ -25,7 +25,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
             return new Symbol[] { new FDAT() {
                 Namespace = arguments["namespace"] as string,
-                Name = UUID.Generate(arguments["file"] as string, mc.Groups[1].Value),
+                Name = UUID.Generate(arguments["namespace"] as string, mc.Groups[1].Value),
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],

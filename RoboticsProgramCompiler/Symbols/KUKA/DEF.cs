@@ -14,7 +14,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
         public override object Execute(Executor executor)
         {
-            Tracker.LogD($"DEF {referenceSymbols}");
+            Tracker.LogD($"execute > {GetType().Name}: {Text} ({referenceSymbols})");
             return null;
         }
 
@@ -28,7 +28,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
             return new Symbol[] { new DEF() {
                 Namespace = arguments["namespace"] as string,
-                Name = mc.Groups[1].Value,
+                Name = UUID.Generate(arguments["namespace"] as string, mc.Groups[1].Value),
                 Type = SymbolType.Label,
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],

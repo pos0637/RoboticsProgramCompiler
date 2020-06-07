@@ -14,7 +14,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
         public override object Execute(Executor executor)
         {
-            Tracker.LogD($"SetPTPParams {referenceSymbols}");
+            Tracker.LogD($"execute > {GetType().Name}: {Text} ({referenceSymbols})");
             return null;
         }
 
@@ -28,7 +28,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
             var variable = new Variable() {
                 Namespace = arguments["namespace"] as string,
-                Name = UUID.Generate(arguments["file"] as string),
+                Name = UUID.Generate(arguments["namespace"] as string),
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
@@ -37,7 +37,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
             return new Symbol[] { new SetPTPParams() {
                 Namespace = arguments["namespace"] as string,
-                Name = UUID.Generate(arguments["file"] as string),
+                Name = UUID.Generate(arguments["namespace"] as string),
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],

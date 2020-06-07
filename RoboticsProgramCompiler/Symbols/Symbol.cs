@@ -1,4 +1,6 @@
-﻿namespace RoboticsProgramCompiler.Symbols
+﻿using Newtonsoft.Json;
+
+namespace RoboticsProgramCompiler.Symbols
 {
     /// <summary>
     /// 符号
@@ -65,41 +67,49 @@
         /// <summary>
         /// 命名空间
         /// </summary>
+        [JsonIgnore]
         public string Namespace { get; set; }
 
         /// <summary>
         /// 名称
         /// </summary>
+        [JsonIgnore]
         public string Name { get; set; }
 
         /// <summary>
         /// 类型
         /// </summary>
+        [JsonIgnore]
         public SymbolType Type { get; set; }
 
         /// <summary>
         /// 作用域
         /// </summary>
+        [JsonIgnore]
         public ScopeType Scope { get; set; }
 
         /// <summary>
         /// 文件
         /// </summary>
+        [JsonIgnore]
         public string File { get; set; }
 
         /// <summary>
         /// 行号
         /// </summary>
+        [JsonIgnore]
         public int Line { get; set; }
 
         /// <summary>
         /// 列号
         /// </summary>
+        [JsonIgnore]
         public int Column { get; set; }
 
         /// <summary>
         /// 文本
         /// </summary>
+        [JsonIgnore]
         public string Text { get; set; }
     }
 }

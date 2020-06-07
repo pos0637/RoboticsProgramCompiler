@@ -14,5 +14,10 @@
         {
             Type = SymbolType.Variable;
         }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}({Newtonsoft.Json.JsonConvert.SerializeObject(this)})";
+        }
     }
 }

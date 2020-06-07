@@ -11,7 +11,7 @@ namespace RoboticsProgramCompiler
             var assembly = compiler.BuildProject("C:/Users/etrit/Desktop/Type");
 
             var executor = new KUKAExecutor();
-            executor.Execute(assembly, "F1weight_Big");
+            executor.Execute(assembly, compiler.FindSymbol(assembly, new Symbols.Reference() { Name = "Fstep1" })?.Name);
         }
     }
 }

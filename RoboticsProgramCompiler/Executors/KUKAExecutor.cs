@@ -22,23 +22,24 @@ namespace RoboticsProgramCompiler.Executors
 
         public override object Execute(Assembly assembly, string symbolName)
         {
-            var symbol = assembly.symbols[symbolName];
-            if (symbol == null) {
+            if (!assembly.symbols.ContainsKey(symbolName)) {
                 return false;
             }
 
+            var symbol = assembly.symbols[symbolName];
             if (!symbol.GetType().IsSubclassOf(typeof(Instruction))) {
                 return false;
             }
 
-            return Execute(assembly, (symbol as Instruction).address);
+            return Execute(assembly, (symbol as Instruction).Address);
         }
 
         public override object Execute(Assembly assembly, int entry)
         {
             exitFlag = false;
+            ip = entry;
 
-            while ((!exitFlag) || (ip < assembly.instructions.Count)) {
+            while ((!exitFlag) && (ip < assembly.instructions.Count)) {
                 (assembly.instructions[ip] as Instruction).Execute(this);
                 ip++;
             }
@@ -50,6 +51,7 @@ namespace RoboticsProgramCompiler.Executors
         {
             if (stacks.Count == 0) {
                 exitFlag = true;
+                return;
             }
 
             var stack = stacks.Last();

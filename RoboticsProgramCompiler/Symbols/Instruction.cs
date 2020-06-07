@@ -11,12 +11,12 @@ namespace RoboticsProgramCompiler.Symbols
         /// <summary>
         /// 地址
         /// </summary>
-        public int address;
+        public int Address { get; set; }
 
         /// <summary>
         /// 引用符号表
         /// </summary>
-        public List<Symbol> referenceSymbols;
+        public List<Symbol> referenceSymbols = new List<Symbol>();
 
         public Instruction()
         {
