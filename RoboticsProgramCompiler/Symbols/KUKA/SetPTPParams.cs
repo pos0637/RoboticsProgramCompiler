@@ -1,4 +1,5 @@
-﻿using RoboticsProgramCompiler.Miscs;
+﻿using RoboticsProgramCompiler.Executors;
+using RoboticsProgramCompiler.Miscs;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -11,9 +12,10 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     {
         private const string regex = @"^BAS \( #PTP_PARAMS , ([\S^\)^\s]*) \)";
 
-        public override object[] Execute(params object[] arguments)
+        public override object Execute(Executor executor)
         {
-            throw new System.NotImplementedException();
+            Tracker.LogD($"SetPTPParams {referenceSymbols}");
+            return null;
         }
 
         public Symbol[] Parse(Dictionary<string, object> arguments)

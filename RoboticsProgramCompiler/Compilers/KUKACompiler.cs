@@ -116,7 +116,9 @@ namespace RoboticsProgramCompiler.Compilers
                 source.symbols.Concat(assembly.symbols);
             }
 
+            var ip = 0;
             foreach (Instruction instruction in source.instructions) {
+                instruction.address = ip++;
                 var symbols = new List<Symbol>();
                 foreach (var reference in instruction.referenceSymbols) {
                     var name = UUID.Generate(reference.Namespace, reference.Name);

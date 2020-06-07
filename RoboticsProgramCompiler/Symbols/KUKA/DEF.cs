@@ -6,17 +6,15 @@ using System.Text.RegularExpressions;
 namespace RoboticsProgramCompiler.Symbols.KUKA
 {
     /// <summary>
-    /// 点到点运动
+    /// 标签
     /// </summary>
-    public class PTP : Instruction, IParser
+    public class DEF : Label, IParser
     {
-        private const string regex = @"^PTP ([\S]*) ([\S]*) ";
-
-        public bool C_DIS { get; set; }
+        private const string regex = @"^DEF ([\S]*) \( \) ";
 
         public override object Execute(Executor executor)
         {
-            Tracker.LogD($"PTP {referenceSymbols}");
+            Tracker.LogD($"DEF {referenceSymbols}");
             return null;
         }
 
@@ -28,20 +26,14 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 return null;
             }
 
-            return new Symbol[] { new PTP() {
+            return new Symbol[] { new DEF() {
                 Namespace = arguments["namespace"] as string,
-                Name = UUID.Generate(arguments["file"] as string),
+                Name = mc.Groups[1].Value,
+                Type = SymbolType.Label,
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
-                Text = text,
-                C_DIS = !string.IsNullOrEmpty(mc.Groups[2].Value),
-                referenceSymbols = new List<Symbol>() {
-                    new Reference() {
-                        Namespace = arguments["namespace"] as string,
-                        Name = mc.Groups[1].Value
-                    }
-                }
+                Text = text
             } };
         }
     }

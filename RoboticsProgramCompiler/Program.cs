@@ -1,4 +1,5 @@
 ﻿using RoboticsProgramCompiler.Compilers;
+using RoboticsProgramCompiler.Executors;
 
 namespace RoboticsProgramCompiler
 {
@@ -7,7 +8,10 @@ namespace RoboticsProgramCompiler
         static void Main(string[] args)
         {
             var compiler = new KUKACompiler();
-            compiler.BuildProject("C:/Users/etrit/Desktop/Type");
+            var assembly = compiler.BuildProject("C:/Users/etrit/Desktop/Type");
+
+            var executor = new KUKAExecutor();
+            executor.Execute(assembly, "F1weight_Big");
         }
     }
 }

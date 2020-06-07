@@ -1,4 +1,5 @@
-﻿using RoboticsProgramCompiler.Miscs;
+﻿using RoboticsProgramCompiler.Executors;
+using RoboticsProgramCompiler.Miscs;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -11,9 +12,10 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     {
         private const string regex = @"^BAS \( #CP_PARAMS , ([\S^\)^\s]*) \)";
 
-        public override object[] Execute(params object[] arguments)
+        public override object Execute(Executor executor)
         {
-            throw new System.NotImplementedException();
+            Tracker.LogD($"SetCPParams {referenceSymbols}");
+            return null;
         }
 
         public Symbol[] Parse(Dictionary<string, object> arguments)
@@ -41,11 +43,11 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
                 Text = text,
-                referenceSymbols = new List<Symbol>() { 
-                    new Reference() { 
+                referenceSymbols = new List<Symbol>() {
+                    new Reference() {
                         Namespace = variable.Namespace,
                         Name = variable.Name
-                    } 
+                    }
                 }
             }, variable };
         }
