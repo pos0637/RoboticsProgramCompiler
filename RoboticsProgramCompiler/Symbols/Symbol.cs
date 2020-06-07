@@ -33,7 +33,12 @@
             /// <summary>
             /// 变量
             /// </summary>
-            Variable
+            Variable,
+
+            /// <summary>
+            /// 引用
+            /// </summary>
+            Reference
         }
 
         /// <summary>

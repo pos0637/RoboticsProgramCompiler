@@ -9,7 +9,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     /// </summary>
     public class SetCPParams : Instruction, IParser
     {
-        private const string regex = @"BAS \( #CP_PARAMS , ([\S^\)^\s]*) \)";
+        private const string regex = @"^BAS \( #CP_PARAMS , ([\S^\)^\s]*) \)";
 
         public override object[] Execute(params object[] arguments)
         {
@@ -41,7 +41,12 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
                 Text = text,
-                symbols = new List<string>() { variable.Name }
+                referenceSymbols = new List<Symbol>() { 
+                    new Reference() { 
+                        Namespace = variable.Namespace,
+                        Name = variable.Name
+                    } 
+                }
             }, variable };
         }
     }

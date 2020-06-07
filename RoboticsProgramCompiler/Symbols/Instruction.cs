@@ -8,9 +8,9 @@ namespace RoboticsProgramCompiler.Symbols
     public abstract class Instruction : Symbol
     {
         /// <summary>
-        /// 关联符号
+        /// 引用符号表
         /// </summary>
-        public List<string> symbols;
+        public List<Symbol> referenceSymbols;
 
         /// <summary>
         /// 执行

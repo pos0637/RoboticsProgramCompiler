@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compilers\Assembly.cs" />
     <Compile Include="Compilers\Compiler.cs" />
     <Compile Include="Compilers\KUKACompiler.cs" />
     <Compile Include="Miscs\Tracker.cs" />
     <Compile Include="Miscs\UUID.cs" />
-    <Compile Include="Program - 复制.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Symbols\KUKA\LDAT.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Symbols\Instruction.cs" />
     <Compile Include="Symbols\IParser.cs" />
     <Compile Include="Symbols\Symbol.cs" />
+    <Compile Include="Symbols\Reference.cs" />
     <Compile Include="Symbols\Variable.cs" />
     <Compile Include="Tests\TestSymbolPaser.cs" />
   </ItemGroup>

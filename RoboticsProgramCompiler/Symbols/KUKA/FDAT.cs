@@ -9,7 +9,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     /// </summary>
     public class FDAT : Variable, IParser
     {
-        private const string regex = @"DECL FDAT ([\S]*) = { TOOL_NO ([\S^,]*) , BASE_NO ([\S^,]*) , IPO_FRAME ([\S^,]*) , POINT2\[\] \"" \"", TQ_STATE ([\S^\}]*)";
+        private const string regex = @"^DECL FDAT ([\S]*) = { TOOL_NO ([\S^,]*) , BASE_NO ([\S^,]*) , IPO_FRAME ([\S^,]*) , POINT2\[\] \"" \"", TQ_STATE ([\S^\}]*)";
 
         public int TOOL_NO { get; set; }
         public int BASE_NO { get; set; }

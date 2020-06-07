@@ -8,7 +8,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     /// </summary>
     public class E6Pos : Variable, IParser
     {
-        private const string regex = @"DECL E6POS ([\S]*) = { X ([\S^,]*) , Y ([\S^,]*) , Z ([\S^,]*) , A ([\S^,]*) , B ([\S^,]*) , C ([\S^,]*) , S ([\S^,]*) , T ([\S^,]*) , E1 ([\S^,]*) , E2 ([\S^,]*) , E3 ([\S^,]*) , E4 ([\S^,]*) , E5 ([\S^,]*) , E6 ([\S^\}]*) \}";
+        private const string regex = @"^DECL E6POS ([\S]*) = { X ([\S^,]*) , Y ([\S^,]*) , Z ([\S^,]*) , A ([\S^,]*) , B ([\S^,]*) , C ([\S^,]*) , S ([\S^,]*) , T ([\S^,]*) , E1 ([\S^,]*) , E2 ([\S^,]*) , E3 ([\S^,]*) , E4 ([\S^,]*) , E5 ([\S^,]*) , E6 ([\S^\}]*) \}";
 
         public float X { get; set; }
         public float Y { get; set; }

@@ -9,7 +9,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     /// </summary>
     public class SetLDAT : Instruction, IParser
     {
-        private const string regex = @"LDAT_ACT = ([\S]*)";
+        private const string regex = @"^LDAT_ACT = ([\S]*)";
 
         public override object[] Execute(params object[] arguments)
         {
@@ -31,7 +31,12 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
                 Text = text,
-                symbols = new List<string>() { UUID.Generate(arguments["file"] as string, mc.Groups[1].Value) }
+                referenceSymbols = new List<Symbol>() {
+                    new Reference() {
+                        Namespace = arguments["namespace"] as string,
+                        Name = mc.Groups[1].Value
+                    }
+                }
             } };
         }
     }

@@ -8,7 +8,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     /// </summary>
     public class LDAT : Variable, IParser
     {
-        private const string regex = @"DECL LDAT ([\S]*) = { VEL ([\S^,]*) , ACC ([\S^,]*) , APO_DIST ([\S^,]*) , APO_FAC ([\S^,]*) , AXIS_VEL ([\S^,]*) , AXIS_ACC ([\S^,]*) , ORI_TYP ([\S^,]*) , CIRC_TYP ([\S^,]*) , JERK_FAC ([\S^,]*) , GEAR_JERK ([\S^,]*) , EXAX_IGN ([\S^\}]*) \}";
+        private const string regex = @"^DECL LDAT ([\S]*) = { VEL ([\S^,]*) , ACC ([\S^,]*) , APO_DIST ([\S^,]*) , APO_FAC ([\S^,]*) , AXIS_VEL ([\S^,]*) , AXIS_ACC ([\S^,]*) , ORI_TYP ([\S^,]*) , CIRC_TYP ([\S^,]*) , JERK_FAC ([\S^,]*) , GEAR_JERK ([\S^,]*) , EXAX_IGN ([\S^\}]*) \}";
 
         public float VEL { get; set; }
         public float ACC { get; set; }

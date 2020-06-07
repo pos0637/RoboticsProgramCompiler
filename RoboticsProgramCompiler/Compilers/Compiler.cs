@@ -1,6 +1,4 @@
-﻿using RoboticsProgramCompiler.Symbols;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 
 namespace RoboticsProgramCompiler.Compilers
 {
@@ -10,71 +8,37 @@ namespace RoboticsProgramCompiler.Compilers
     public abstract class Compiler
     {
         /// <summary>
-        /// 指令集合
+        /// 编译工程
         /// </summary>
-        protected List<Symbol> instructions = new List<Symbol>();
-
-        /// <summary>
-        /// 符号表
-        /// </summary>
-        protected List<Symbol> symbols = new List<Symbol>();
-
-        /// <summary>
-        /// 编译链接工程
-        /// </summary>
-        /// <param name="rootFolder"></param>
-        /// <returns>是否成功</returns>
-        public abstract bool BuildProject(string rootFolder);
+        /// <param name="rootFolder">根目录</param>
+        /// <returns>程序集</returns>
+        public abstract Assembly BuildProject(string rootFolder);
 
         /// <summary>
         /// 编译文件
         /// </summary>
         /// <param name="filename"></param>
-        /// <returns>是否成功</returns>
-        public abstract bool Compile(string filename);
+        /// <returns>程序集</returns>
+        public abstract Assembly Compile(string filename);
 
         /// <summary>
         /// 链接
         /// </summary>
-        /// <returns>是否成功</returns>
-        public abstract bool Link();
+        /// <param name="assemblies">程序集列表</param>
+        /// <returns>程序集</returns>
+        public abstract Assembly Link(List<Assembly> assemblies);
 
         /// <summary>
         /// 链接
         /// </summary>
-        /// <param name="instructions">指令集合</param>
-        /// <param name="symbols">符号表</param>
-        /// <returns>是否成功</returns>
-        public abstract bool Link(List<Symbol> instructions, List<Symbol> symbols);
+        /// <param name="source">程序集</param>
+        /// <param name="assemblies">程序集列表</param>
+        /// <returns>程序集</returns>
+        public abstract Assembly Link(Assembly source, List<Assembly> assemblies);
 
         /// <summary>
         /// 清理
         /// </summary>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public virtual void Clean()
-        {
-            instructions.Clear();
-            symbols.Clear();
-        }
-
-        /// <summary>
-        /// 获取指令集合
-        /// </summary>
-        /// <returns>指令集合</returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public virtual List<Symbol> GetInstructions()
-        {
-            return instructions;
-        }
-
-        /// <summary>
-        /// 获取符号表
-        /// </summary>
-        /// <returns>符号表</returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public virtual List<Symbol> GetSymbols()
-        {
-            return symbols;
-        }
+        public abstract void Clean();
     }
 }

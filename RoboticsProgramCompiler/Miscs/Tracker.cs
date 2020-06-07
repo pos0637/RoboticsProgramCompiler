@@ -28,6 +28,15 @@ namespace RoboticsProgramCompiler.Miscs
         /// <summary>
         /// 错误日志
         /// </summary>
+        /// <param name="content">内容</param>
+        public static void LogE(string content)
+        {
+            Console.WriteLine(content);
+        }
+
+        /// <summary>
+        /// 错误日志
+        /// </summary>
         /// <param name="e">异常</param>
         public static void LogE(Exception e)
         {

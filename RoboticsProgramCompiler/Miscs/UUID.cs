@@ -23,7 +23,7 @@
         /// <returns>UUID</returns>
         public static string Generate(string file, string symbol)
         {
-            return $"{file}-{symbol}";
+            return $"{file}/{symbol}";
         }
     }
 }

@@ -6,7 +6,7 @@ namespace RoboticsProgramCompiler.Tests
 {
     public sealed class TestSymbolPaser
     {
-        public static vpid Test1()
+        public static void Test1()
         {
             var symbols = new E6Pos().Parse(new Dictionary<string, object>() {
                 {"file", ""},

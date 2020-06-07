@@ -9,7 +9,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
     /// </summary>
     public class SetPTPParams : Instruction, IParser
     {
-        private const string regex = @"BAS \( #PTP_PARAMS , ([\S^\)^\s]*) \)";
+        private const string regex = @"^BAS \( #PTP_PARAMS , ([\S^\)^\s]*) \)";
 
         public override object[] Execute(params object[] arguments)
         {
@@ -39,7 +39,12 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
-                symbols = new List<string>() { variable.Name }
+                referenceSymbols = new List<Symbol>() {
+                    new Reference() {
+                        Namespace = arguments["namespace"] as string,
+                        Name = variable.Name
+                    }
+                }
             }, variable };
         }
     }

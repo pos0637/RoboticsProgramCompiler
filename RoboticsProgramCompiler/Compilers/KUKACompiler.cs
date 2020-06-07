@@ -9,12 +9,15 @@ using System.Text;
 
 namespace RoboticsProgramCompiler.Compilers
 {
+    /// <summary>
+    /// KUKA程序编译器
+    /// </summary>
     public class KUKACompiler : Compiler
     {
         /// <summary>
         /// 符号解析器列表
         /// </summary>
-        private IParser[] parsers = new IParser[] {
+        private readonly IParser[] parsers = new IParser[] {
             new E6Pos(),
             new FDAT(),
             new LDAT(),
@@ -28,32 +31,44 @@ namespace RoboticsProgramCompiler.Compilers
             new LIN()
         };
 
-        public override bool BuildProject(string rootFolder)
+        public override Assembly BuildProject(string rootFolder)
         {
+            var assemblies = new List<Assembly>();
             var files = Directory.EnumerateFiles(rootFolder, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".src") || s.EndsWith(".dat"));
             foreach (var file in files) {
-                if (!Compile(file)) {
-                    return false;
+                var assembly = Compile(file);
+                if (assembly == null) {
+                    return null;
                 }
+
+                assemblies.Add(assembly);
             }
 
-            if (!Link()) {
-                return false;
+            var result = Link(assemblies);
+            if (result == null) {
+                return null;
             }
 
-            return true;
+            return result;
         }
 
-        public override bool Compile(string filename)
+        public override void Clean()
+        {
+        }
+
+        public override Assembly Compile(string filename)
         {
             try {
+                var assembly = new Assembly() { filename = filename };
                 var sr = new StreamReader(filename, Encoding.UTF8);
                 string text;
                 var line = 0;
+
                 while ((text = sr.ReadLine()) != null) {
                     line++;
                     foreach (var parser in parsers) {
                         var result = parser.Parse(new Dictionary<string, object>() {
+                            { "namespace", filename },
                             { "file", filename },
                             { "line", line },
                             { "column", 0 },
@@ -63,32 +78,58 @@ namespace RoboticsProgramCompiler.Compilers
                             continue;
                         }
 
+                        Tracker.LogD($"compile > {text}");
                         lock (this) {
-                            symbols.AddRange(result);
-                            instructions.AddRange(
-                                from s in symbols
-                                where s.Type != Symbol.SymbolType.Variable
-                                select s);
+                            foreach (var symbol in result) {
+                                if (symbol.Type != Symbol.SymbolType.Reference) {
+                                    if (symbol.Type != Symbol.SymbolType.Variable) {
+                                        assembly.instructions.Add(symbol);
+                                    }
+
+                                    assembly.symbols.Add(symbol.Name, symbol);
+                                }
+                                else {
+                                    assembly.relocatedSymbols.Add(symbol.Name, symbol);
+                                }
+                            }
                         }
                     }
                 }
 
-                return true;
+                return assembly;
             }
             catch (Exception e) {
                 Tracker.LogE(e);
-                return false;
+                return null;
             }
         }
 
-        public override bool Link()
+        public override Assembly Link(List<Assembly> assemblies)
         {
-            throw new NotImplementedException();
+            return Link(new Assembly(), assemblies);
         }
 
-        public override bool Link(List<Symbol> instructions, List<Symbol> symbols)
+        public override Assembly Link(Assembly source, List<Assembly> assemblies)
         {
-            throw new NotImplementedException();
+            foreach (var assembly in assemblies) {
+                source.instructions.AddRange(assembly.instructions);
+                source.symbols.Concat(assembly.symbols);
+            }
+
+            foreach (Instruction instruction in source.instructions) {
+                var symbols = new List<Symbol>();
+                foreach (var reference in instruction.referenceSymbols) {
+                    var name = UUID.Generate(reference.Namespace, reference.Name);
+                    if (!source.symbols.ContainsKey(name)) {
+                        Tracker.LogE($"symbol not found: {name}");
+                        return null;
+                    }
+
+                    symbols.Add(source.symbols[name]);
+                }
+            }
+
+            return source;
         }
     }
 }
