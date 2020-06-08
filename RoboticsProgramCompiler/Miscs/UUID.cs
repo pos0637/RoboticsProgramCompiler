@@ -12,7 +12,7 @@
         /// <returns>UUID</returns>
         public static string Generate(string file)
         {
-            return $"{file}/{System.Guid.NewGuid():N}";
+            return $"{file}/{System.Guid.NewGuid().ToString("N").ToUpper()}";
         }
 
         /// <summary>
@@ -23,7 +23,7 @@
         /// <returns>UUID</returns>
         public static string Generate(string file, string symbol)
         {
-            return $"{file}/{symbol}";
+            return $"{file}/{symbol.ToUpper()}";
         }
     }
 }

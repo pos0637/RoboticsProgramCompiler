@@ -31,7 +31,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
         public Symbol[] Parse1(Dictionary<string, object> arguments)
         {
-            var text = arguments["text"] as string;
+            var text = (arguments["text"] as string).ToUpper();
             var mc = Regex.Match(text, regex1.Replace(" ", @"[\s]*"));
             if (!mc.Success) {
                 return null;
@@ -43,7 +43,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
-                Text = text,
+                Text = arguments["text"] as string,
                 VEL = float.Parse(mc.Groups[2].Value),
                 ACC = float.Parse(mc.Groups[3].Value),
                 APO_DIST = float.Parse(mc.Groups[4].Value),
@@ -55,7 +55,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
         public Symbol[] Parse2(Dictionary<string, object> arguments)
         {
-            var text = arguments["text"] as string;
+            var text = (arguments["text"] as string).ToUpper();
             var mc = Regex.Match(text, regex2.Replace(" ", @"[\s]*"));
             if (!mc.Success) {
                 return null;
@@ -67,7 +67,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
                 File = arguments["file"] as string,
                 Line = (int)arguments["line"],
                 Column = (int)arguments["column"],
-                Text = text,
+                Text = arguments["text"] as string,
                 VEL = float.Parse(mc.Groups[2].Value),
                 ACC = float.Parse(mc.Groups[3].Value),
                 APO_DIST = float.Parse(mc.Groups[4].Value),

@@ -75,7 +75,7 @@ namespace RoboticsProgramCompiler.Compilers
                     line++;
                     foreach (var parser in parsers) {
                         var result = parser.Parse(new Dictionary<string, object>() {
-                            { "namespace", filename.Substring(rootFolder.Length + 1).ToLower() },
+                            { "namespace", filename.Substring(rootFolder.Length + 1).ToUpper() },
                             { "file", filename.Substring(rootFolder.Length + 1) },
                             { "line", line },
                             { "column", 0 },
@@ -156,6 +156,9 @@ namespace RoboticsProgramCompiler.Compilers
 
         public override Symbol FindSymbol(Assembly assembly, Reference reference)
         {
+            reference.Namespace = reference.Namespace?.ToUpper();
+            reference.Name = reference.Name?.ToUpper();
+
             // 查找同名符号
             if (assembly.symbols.ContainsKey(reference.Name)) {
                 return assembly.symbols[reference.Name];

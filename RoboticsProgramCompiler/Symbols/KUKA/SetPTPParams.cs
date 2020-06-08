@@ -20,7 +20,7 @@ namespace RoboticsProgramCompiler.Symbols.KUKA
 
         public Symbol[] Parse(Dictionary<string, object> arguments)
         {
-            var text = arguments["text"] as string;
+            var text = (arguments["text"] as string).ToUpper();
             var mc = Regex.Match(text, regex.Replace(" ", @"[\s]*"));
             if (!mc.Success) {
                 return null;
