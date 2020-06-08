@@ -15,28 +15,27 @@ namespace RoboticsProgramCompiler.Compilers
     public class KUKACompiler : Compiler
     {
         /// <summary>
+        /// 解析器命名空间
+        /// </summary>
+        private const string ParserNamespace = "RoboticsProgramCompiler.Symbols.KUKA";
+
+        /// <summary>
         /// 符号解析器列表
         /// </summary>
-        private readonly IParser[] parsers = new IParser[] {
-            new E6Pos(),
-            new FDAT(),
-            new LDAT(),
-            new PDAT(),
-            new SetFDAT(),
-            new SetLDAT(),
-            new SetPDAT(),
-            new SetPTPParams(),
-            new SetCPParams(),
-            new PTP(),
-            new LIN(),
-            new DEF(),
-            new END(),
-            new CALL()
-        };
+        private readonly List<IParser> parsers = new List<IParser>();
+        private readonly PDAT PDEFAULT = new PDAT() { Name = "PDEFAULT" };
+        private readonly FDAT FHOME = new FDAT() { Name = "FHOME" };
+        private readonly E6Pos XHOME = new E6Pos() { Name = "XHOME" };
 
-        private PDAT PDEFAULT = new PDAT() { Name = "PDEFAULT" };
-        private FDAT FHOME = new FDAT() { Name = "FHOME" };
-        private E6Pos XHOME = new E6Pos() { Name = "XHOME" };
+        public KUKACompiler()
+        {
+            var types = (from t in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
+                         where t.Namespace.StartsWith(ParserNamespace)
+                         select t).ToList();
+            foreach (var type in types) {
+                parsers.Add(Activator.CreateInstance(type) as IParser);
+            }
+        }
 
         public override Assembly BuildProject(string rootFolder)
         {
